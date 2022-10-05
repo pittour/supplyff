@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <div>
     <v-dialog
-      v-model="connection"
+      v-model="show"
       width="350px"
     >
       <v-card class="d-flex flex-column align-center justify-center py-12">
@@ -28,11 +28,12 @@
         <v-btn
           nuxt
           to="/register"
+          @click="show = false"
         >Register</v-btn>
 
       </v-card>
     </v-dialog>
-  </v-container>
+  </div>
 
 </template>
 
@@ -40,13 +41,30 @@
 export default {
   name: "Connection",
 
+  props: {
+    connectionDial: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   data() {
     return {
-      connection: true,
       email: "",
       pwd: "",
       errors: "",
     };
+  },
+
+  computed: {
+    show: {
+      get() {
+        return this.connectionDial;
+      },
+      set(value) {
+        this.$emit("update:connectionDial", value);
+      },
+    },
   },
 
   mounted() {},
@@ -63,7 +81,8 @@ export default {
           })
           .then(() => {
             if (this.$auth.loggedIn) {
-              this.connection = false;
+              this.$auth.fetchUser();
+              this.show = false;
             }
           });
       } catch (e) {

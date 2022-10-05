@@ -20,7 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('ingame_tag');
             $table->string('discord_tag')->nullable();
-            $table->string('server')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

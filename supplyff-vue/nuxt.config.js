@@ -49,7 +49,7 @@ export default {
     debug: false,
     credentials: true,
     https: false,
-    baseURL: "http://localhost:8000/api"
+    baseURL: "http://localhost:8000/api",
   },
 
   auth: {
@@ -59,6 +59,7 @@ export default {
         url: 'http://localhost:8000',
         endpoints: {
           login: { url: '/api/login', method: 'post' },
+          logout: { url: '/api/logout', method: 'post' },
           user: { url: '/api/me', method: 'get' }
         }
       }

@@ -14,6 +14,7 @@
           <v-row no-gutters>
             <v-text-field
               v-model="userName"
+              style="width:200px;"
               label="Username"
               :rules="rules.userName"
             ></v-text-field>
@@ -22,15 +23,17 @@
 
             <v-text-field
               v-model="email"
+              style="width:200px;"
               label="Email Address"
               :rules="rules.email"
             >
             </v-text-field>
-          </v-row>
 
-          <v-row no-gutters>
+            <v-spacer></v-spacer>
+
             <v-text-field
               v-model="pwd"
+              style="width:200px;"
               label="Password"
               :rules="rules.pwd"
               type="password"
@@ -40,10 +43,13 @@
 
             <v-text-field
               v-model="cpwd"
+              style="width:200px;"
               label="Password Confirmation"
+              :rules="rules.cpwd"
               type="password"
             >
             </v-text-field>
+
           </v-row>
         </v-card-text>
 
@@ -54,6 +60,7 @@
         <v-card-text>
           <v-row no-gutters>
             <v-text-field
+              style="width:200px;"
               v-model="inGame"
               label="In-Game Name"
               hint="Please enter the name of your main character in Flyff Universe"
@@ -63,7 +70,18 @@
 
             <v-spacer></v-spacer>
 
+            <v-select
+              v-model="server"
+              :items="servers"
+              item-text="name"
+              item-value="id"
+              label="Server"
+            ></v-select>
+
+            <v-spacer></v-spacer>
+
             <v-text-field
+              style="width:200px;"
               v-model="discord"
               label="Discord Name (optional)"
             >
@@ -95,7 +113,9 @@ export default {
       pwd: "",
       cpwd: "",
       inGame: "",
+      server: "",
       discord: "",
+      servers: [],
       rules: {
         userName: [
           (v) => !!v || "Username is required",
@@ -110,8 +130,12 @@ export default {
         pwd: [
           (v) => !!v || "Password is required",
           (v) =>
-            (v && v.length <= 12 && v.length >= 3) ||
-            "Password must have between 3 and 12 characters",
+            (v && v.length <= 12 && v.length >= 8) ||
+            "Password must have between 8 and 12 characters",
+        ],
+        cpwd: [
+          (v) => !!v || "Password confirmation is required",
+          (v) => v === this.pwd || "Password confirmation doesn't match",
         ],
         inGame: [
           (v) => !!v || "In Game Name is required",
@@ -122,6 +146,11 @@ export default {
       },
     };
   },
+  created() {
+    this.$axios.get("/servers").then((res) => {
+      this.servers = res.data;
+    });
+  },
 
   methods: {
     validate() {
@@ -131,8 +160,11 @@ export default {
           {
             email: this.email,
             password: this.pwd,
+            password_confirmation: this.cpwd,
             username: this.userName,
             ingame_tag: this.inGame,
+            server_id: this.server,
+            discord_tag: this.discord,
           },
           {
             Headers: {
@@ -140,7 +172,10 @@ export default {
             },
           }
         )
-        .then(this.$router.push("/"));
+        .then((res) => this.$router.push("/"))
+        .catch((e) => {
+          console.log(e.message);
+        });
     },
   },
 };
