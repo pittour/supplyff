@@ -113,7 +113,14 @@ export default {
           iron: "6%",
         },
       ],
+      items: "",
     };
+  },
+
+  created() {
+    // this.$http.get("items").then((res) => {
+    //   this.items = res;
+    // });
   },
 };
 </script>

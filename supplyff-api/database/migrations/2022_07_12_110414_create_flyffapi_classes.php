@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddServerConstraintToUsers extends Migration
+class CreateFlyffapiClasses extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddServerConstraintToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('bio')->nullable();
-            $table->foreignId('server_id')->nullable()->constrained()->nullOnDelete();
+        Schema::create('flyffapi_classes', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('flyff_api_id')->unique();
+            $table->string('name');
         });
     }
 
@@ -26,8 +27,6 @@ class AddServerConstraintToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['server_id']);
-        });
+        Schema::dropIfExists('flyffapi_classes');
     }
 }

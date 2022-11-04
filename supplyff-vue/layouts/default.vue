@@ -11,6 +11,8 @@
           Supplyff
           <v-spacer />
 
+          <create-ad />
+
           <v-menu
             bottom
             left
@@ -74,9 +76,10 @@
 <script>
 import { mapGetters } from "vuex";
 import Connection from "@/components/connection.vue";
+import CreateAd from "~/components/createAd2.vue";
 
 export default {
-  components: { Connection },
+  components: { Connection, CreateAd },
   name: "DefaultLayout",
   data() {
     return {

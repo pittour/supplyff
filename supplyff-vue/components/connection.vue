@@ -2,7 +2,7 @@
   <div>
     <v-dialog
       v-model="show"
-      width="350px"
+      max-width="350px"
     >
       <v-card class="d-flex flex-column align-center justify-center py-12">
         <v-alert

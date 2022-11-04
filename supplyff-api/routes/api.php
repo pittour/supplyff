@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FlyffapiItemController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\UserController;
 
@@ -31,3 +33,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 // Servers
 Route::get('/servers', [ServerController::class, 'index']);
+
+// items
+Route::get('/items', [ItemController::class, 'index']);
+
+// flyff items
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::apiResources([
+        'api-items' => 'FlyffapiItemController',
+    ]);
+});

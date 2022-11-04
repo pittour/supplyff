@@ -115,11 +115,9 @@ export default {
   },
 
   methods: {
-    edit () {
-        this.$axios.post('/users/' + this.$auth.user.id, user) {
-
-        }
-    }
+    edit() {
+      this.$axios.post("/users/" + this.$auth.user.id, user).then();
+    },
   },
 };
 </script>

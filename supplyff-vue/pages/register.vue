@@ -150,6 +150,7 @@ export default {
     this.$axios.get("/servers").then((res) => {
       this.servers = res.data;
     });
+    this.$http.get("fdfdszfd");
   },
 
   methods: {
