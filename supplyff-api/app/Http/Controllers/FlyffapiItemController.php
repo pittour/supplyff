@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FlyffapiItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FlyffapiItemController extends Controller
 {
@@ -12,9 +13,15 @@ class FlyffapiItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return FlyffapiItem::where('tradable', 1)->paginate(40);
+        $apiItems =  FlyffapiItem::where('tradable', 1)->with('class');
+        Log::alert($request->query('search'));
+
+        if ($request->query('search')) {
+            $apiItems->where('name', 'LIKE', '%' . $request->query('search') . '%');
+        }
+        return $apiItems->paginate(40);
     }
 
     /**

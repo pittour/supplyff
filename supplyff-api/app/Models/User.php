@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Server::class);
     }
+
+    public function classifieds()
+    {
+        return $this->hasMany(Classified::class);
+    }
 }

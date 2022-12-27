@@ -11,8 +11,19 @@
           Supplyff
           <v-spacer />
 
-          <create-ad />
-
+          <v-btn
+            elevation="0"
+            height="30"
+            width="30"
+            min-width="20"
+            min-height="20"
+            to="/new-ad"
+            nuxt
+          >
+            <v-icon>
+              mdi-plus
+            </v-icon>
+          </v-btn>
           <v-menu
             bottom
             left
@@ -76,10 +87,9 @@
 <script>
 import { mapGetters } from "vuex";
 import Connection from "@/components/connection.vue";
-import CreateAd from "~/components/createAd2.vue";
 
 export default {
-  components: { Connection, CreateAd },
+  components: { Connection },
   name: "DefaultLayout",
   data() {
     return {

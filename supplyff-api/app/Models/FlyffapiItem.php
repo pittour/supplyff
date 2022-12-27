@@ -11,7 +11,7 @@ class FlyffapiItem extends Model
 
     public function items()
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(Item::class, 'flyffapi_item_id', 'flyff_api_id');
     }
 
     public function class()

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClassifiedController;
 use App\Http\Controllers\FlyffapiItemController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ServerController;
@@ -43,3 +44,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         'api-items' => 'FlyffapiItemController',
     ]);
 });
+
+// Classifieds
+Route::post('/classified', [ClassifiedController::class, 'store']);

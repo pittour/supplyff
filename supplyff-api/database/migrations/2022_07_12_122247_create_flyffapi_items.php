@@ -24,6 +24,7 @@ class CreateFlyffapiItems extends Migration
             $table->string('level');
             $table->string('sex')->nullable();
             $table->boolean('tradable');
+            $table->string('icon');
         });
     }
 

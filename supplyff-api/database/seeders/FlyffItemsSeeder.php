@@ -47,6 +47,7 @@ class FlyffItemsSeeder extends Seeder
                     'level' => $item['level'],
                     'sex' => $item['sex'] ?? null,
                     'tradable' => $item['tradable'],
+                    'icon' => $item['icon'],
                 ]
             );
         }
