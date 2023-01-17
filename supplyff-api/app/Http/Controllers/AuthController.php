@@ -64,6 +64,6 @@ class AuthController extends Controller
 
     public function me()
     {
-        return auth()->user();
+        return auth()->user()->with('server')->first();
     }
 }

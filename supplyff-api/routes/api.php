@@ -36,7 +36,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::get('/servers', [ServerController::class, 'index']);
 
 // items
-Route::get('/items', [ItemController::class, 'index']);
 
 // flyff items
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -46,4 +45,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 // Classifieds
-Route::post('/classified', [ClassifiedController::class, 'store']);
+Route::post('/classified', [ClassifiedController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/classifieds', [ClassifiedController::class, 'index']);

@@ -1,15 +1,80 @@
 <template>
   <v-container>
-    <v-btn
-      to="/inspire"
-      nuxt
-    >Test</v-btn>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="classifieds"
       :items-per-page="5"
-      class="elevation-1"
-    ></v-data-table>
+      class="elevation-1 text-center"
+    >
+      <template #[`item.icon`]="{ item }">
+        <div class="d-flex justify-center align-center">
+          <v-img
+            :src="'https://api.flyff.com/image/item/' + item.item.flyff_item.icon"
+            max-height="30"
+            max-width="30"
+            contain
+          />
+        </div>
+
+      </template>
+      <template #[`item.name`]="{ item }">
+        <span class="font-weight-medium">
+          {{ item.item.flyff_item.name }}
+        </span>
+      </template>
+      <template #[`item.upgrade`]="{ item }">
+        <div v-if="item.item.general_level === 0 && item.item.elemental_level === 0">
+          -
+        </div>
+        <div v-if="item.item.general_level > 0">
+          +{{ item.item.general_level }}
+        </div>
+        <div v-if="item.item.elemental_level > 0">
+          +{{ item.item.elemental_level }} {{ item.item.element_type }}
+        </div>
+      </template>
+      <template #[`item.bonuses`]="{ item }">
+        <div v-if="item.item.piercings
+          ||
+          item.item.awake">
+          <div>
+            {{ item.item.piercings ? "Has piercings " : "" }}
+          </div>
+          <div>
+            {{ item.item.awake ? "Has awake " : "" }}
+          </div>
+        </div>
+        <div v-else>
+          -
+        </div>
+      </template>
+      <template #[`item.server`]="{ item }">
+        <span>
+          {{ item.user.server.name }}
+        </span>
+      </template>
+      <template #[`item.deposit`]="{ item }">
+        <span>
+          {{ item.deposit }} p
+        </span>
+      </template>
+      <template #[`item.rate`]="{ item }">
+        <span
+          v-if="item.is_free || item.weekly_rate === 0"
+          class="font-weight-medium"
+        >
+          FREE !
+        </span>
+        <span v-else>
+          {{ item.weekly_rate }} p
+        </span>
+      </template>
+      <template #[`item.action`]="{ item }">
+        <span>
+          <v-icon>mdi-chevron-right</v-icon>
+        </span>
+      </template>
+    </v-data-table>
   </v-container>
 </template>
 
@@ -20,107 +85,32 @@ export default {
     return {
       headers: [
         {
-          text: "Dessert (100g serving)",
-          align: "start",
+          text: "Icon",
           sortable: false,
-          value: "name",
+          value: "icon",
+          align: "center",
         },
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat" },
-        { text: "Carbs (g)", value: "carbs" },
-        { text: "Protein (g)", value: "protein" },
-        { text: "Iron (%)", value: "iron" },
+        { text: "Name", value: "name", sortable: false, align: "center" },
+        { text: "Upgrade", value: "upgrade", sortable: false, align: "center" },
+        {
+          text: "Other Bonuses",
+          value: "bonuses",
+          sortable: false,
+          align: "center",
+        },
+        { text: "Server", value: "server", sortable: false, align: "center" },
+        { text: "Deposit", value: "deposit", align: "center" },
+        { text: "Weekly Rate", value: "rate", align: "center" },
+        { text: "", value: "action", sortable: false, align: "center" },
       ],
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%",
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%",
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%",
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%",
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%",
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%",
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%",
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%",
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%",
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%",
-        },
-      ],
-      items: "",
+      classifieds: [],
     };
   },
 
   created() {
-    // this.$http.get("items").then((res) => {
-    //   this.items = res;
-    // });
+    this.$http.get("classifieds").then((res) => {
+      this.classifieds = res;
+    });
   },
 };
 </script>

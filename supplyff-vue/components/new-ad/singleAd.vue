@@ -1,7 +1,5 @@
 <template>
   <v-form v-model="adForm">
-    {{ validation }}
-    {{ adForm }}
     <v-row>
       <create-ad
         :itemDialog.sync="itemDialog"
@@ -17,25 +15,25 @@
           @click="itemDialog = true"
         >
           <v-card-title class="justify-center text-title pb-2">
-            {{ item ? item.name : 'Select item' }}
+            {{ singleAd.item ? singleAd.item.name : 'Select item' }}
             <v-chip
               color="primary"
               x-small
               class="px-2 ml-1"
             >
-              {{ item ? item.sex==='male' ? 'M' : item.sex==='F' ? 'F' : 'Uni' : '?' }}
+              {{ singleAd.item ? singleAd.item.sex==='male' ? 'M' : singleAd.item.sex==='F' ? 'F' : 'Uni' : '?' }}
             </v-chip>
             <v-chip
               color="primary"
               x-small
               class="px-2 ml-1"
-            > Lv.{{ item ? item.level : '??' }}</v-chip>
+            > Lv.{{ singleAd.item ? singleAd.item.level : '??' }}</v-chip>
           </v-card-title>
-          <div class="d-flex justify-center subtitle-1">{{ item ? item.class ? item.class.name : 'All jobs' : 'Job' }}</div>
+          <div class="d-flex justify-center subtitle-1">{{ singleAd.item ? singleAd.item.class ? singleAd.item.class.name : 'All jobs' : 'Job' }}</div>
           <v-card-text>
             <v-row no-gutters>
               <v-img
-                :src="item ? 'https://api.flyff.com/image/item/' + item.icon : itemSvg"
+                :src="singleAd.item ? 'https://api.flyff.com/image/item/' + singleAd.item.icon : itemSvg"
                 max-height="70"
                 contain
               >
@@ -48,7 +46,7 @@
               <span
                 style="font-size: 1.4em"
                 class="black--text"
-              >{{ item ? item.rarity : 'Item rarity' }}</span>
+              >{{ singleAd.item ? singleAd.item.rarity : 'Item rarity' }}</span>
             </v-row>
           </v-card-text>
         </v-card>
@@ -65,11 +63,11 @@
             <v-row class="mt-2">
               <v-col class="d-flex justify-center">
                 <v-checkbox
-                  v-model="ad.free_boolean"
+                  v-model="singleAd.free_boolean"
                   hide-details
                   dense
                   label="Lend For Free ?"
-                  @click="ad.free_boolean ? (ad.weekly_rate = 0, disable_rate = true) : disable_rate = false"
+                  @click="singleAd.free_boolean ? (singleAd.weekly_rate = 0, disable_rate = true) : disable_rate = false"
                 >
                 </v-checkbox>
               </v-col>
@@ -77,16 +75,16 @@
             <v-row class="mt-3">
               <v-col cols="6">
                 <v-text-field
-                  v-model="ad.weekly_rate"
+                  v-model="singleAd.weekly_rate"
                   :disabled="disable_rate"
                   label="Weekly Rate"
                   suffix="p"
-                  :rules="ad.free_boolean ? [] : [v => !!v || 'Required', v => v < 999999999 && v >= 0 || 'Rate must be between 0 and 999 999 999 penyas']"
+                  :rules="singleAd.free_boolean ? [] : [v => !!v || 'Required', v => v < 999999999 && v >= 0 || 'Rate must be between 0 and 999 999 999 penyas']"
                 ></v-text-field>
               </v-col>
               <v-col cols="6">
                 <v-text-field
-                  v-model="ad.deposit"
+                  v-model="singleAd.deposit"
                   label="Deposit Amount"
                   suffix="p"
                   :rules="[v => !!v || 'Required', v => v < 999999999 && v >= 0 || 'Rate must be between 0 and 999 999 999 penyas']"
@@ -113,7 +111,7 @@
               <v-col cols="8">
                 <span>Upgrade Level</span>
                 <v-slider
-                  v-model="ad.general_level"
+                  v-model="singleAd.general_level"
                   class="pt-3"
                   hide-details
                   dense
@@ -122,8 +120,8 @@
                   append-icon="mdi-plus"
                   prepend-icon="mdi-minus"
                   max="10"
-                  @click:append="ad.general_level < 10 ? ad.general_level++ : ''"
-                  @click:prepend="ad.general_level > 0 ? ad.general_level-- : ''"
+                  @click:append="singleAd.general_level < 10 ? singleAd.general_level++ : ''"
+                  @click:prepend="singleAd.general_level > 0 ? singleAd.general_level-- : ''"
                 ></v-slider>
               </v-col>
             </v-row>
@@ -131,7 +129,7 @@
               <v-col cols="8">
                 <span>Elemental Level</span>
                 <v-slider
-                  v-model="ad.elemental_level"
+                  v-model="singleAd.elemental_level"
                   class="pt-3"
                   hide-details
                   dense
@@ -140,22 +138,22 @@
                   append-icon="mdi-plus"
                   prepend-icon="mdi-minus"
                   max="10"
-                  @click:append="ad.elemental_level < 10 ? ad.elemental_level++ : ''"
-                  @click:prepend="ad.elemental_level > 0 ? ad.elemental_level-- : ''"
+                  @click:append="singleAd.elemental_level < 10 ? singleAd.elemental_level++ : ''"
+                  @click:prepend="singleAd.elemental_level > 0 ? singleAd.elemental_level-- : ''"
                 ></v-slider>
               </v-col>
               <v-spacer></v-spacer>
               <v-col
                 cols="3"
-                v-if="ad.elemental_level > 0"
+                v-if="singleAd.elemental_level > 0"
               >
                 <v-select
-                  v-model="ad.element_type"
+                  v-model="singleAd.element_type"
                   hide-details
                   clearable
                   :items="['fire', 'water', 'electric', 'earth', 'wind']"
                   style="width:120px; display:inline-flex"
-                  :rules="ad.elemental_level > 0 ? [v => !!v || 'Required'] : []"
+                  :rules="singleAd.elemental_level > 0 ? [v => !!v || 'Required'] : []"
                 >
                 </v-select>
               </v-col>
@@ -166,7 +164,7 @@
             >
               <v-col cols="6">
                 <v-checkbox
-                  v-model="ad.awake"
+                  v-model="singleAd.awake"
                   hide-details
                   dense
                   label="Awake ?"
@@ -176,7 +174,7 @@
               </v-col>
               <v-col cols="6">
                 <v-checkbox
-                  v-model="ad.piercings"
+                  v-model="singleAd.piercings"
                   hide-details
                   dense
                   label="Piercings ?"
@@ -198,7 +196,7 @@
           </v-card-title>
           <v-card-text>
             <v-textarea
-              v-model="ad.description"
+              v-model="singleAd.description"
               no-resize
               placeholder="Tell more about the item : piercings values, awake stats, ... or the transaction : maximum duration, payment beforehand/afterward, transaction location, ..."
             ></v-textarea>
@@ -225,17 +223,13 @@ export default {
       adForm: false,
       disable_rate: false,
       itemDialog: false,
-      item: null,
       itemSvg: require("~/static/img/plus-item.svg"),
     };
   },
   computed: {
-    ad() {
-      return this.singleAd;
-    },
     validation: {
       get() {
-        return this.adForm && !!this.item;
+        return this.adForm && !!this.singleAd.item;
       },
       set(newVal) {
         return newVal;
@@ -256,8 +250,8 @@ export default {
       }
     },
 
-    "ad.elemental_level"(newVal) {
-      if (this.ad.elemental_level === 0) {
+    "singleAd.elemental_level"(newVal) {
+      if (this.singleAd.elemental_level === 0) {
         this.element_type = null;
       }
     },
@@ -267,8 +261,7 @@ export default {
 
   methods: {
     getItem(value) {
-      this.ad.flyffapi_item_id = value.flyff_api_id;
-      this.item = value;
+      this.singleAd.item = value;
     },
   },
 };

@@ -7,7 +7,7 @@
       <v-card-text>
         <single-ad
           :single-ad.sync="singleAd"
-          @form="test($event)"
+          @form="formState($event)"
         />
       </v-card-text>
       <v-card-actions class="justify-center">
@@ -42,7 +42,7 @@ export default {
       this.$http.post("classified", this.singleAd).then((res) => {});
     },
 
-    test(data) {
+    formState(data) {
       this.validated = data;
     },
   },

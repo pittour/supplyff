@@ -15,7 +15,7 @@ class Item extends Model
 
     public function flyffItem()
     {
-        return $this->belongsTo(FlyffapiItem::class, 'flyff_api_id', 'flyffapi_item_id');
+        return $this->belongsTo(FlyffapiItem::class, 'flyffapi_item_id', 'flyff_api_id');
     }
 
     public function classified()

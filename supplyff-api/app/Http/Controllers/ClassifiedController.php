@@ -16,7 +16,7 @@ class ClassifiedController extends Controller
      */
     public function index()
     {
-        //
+        return Classified::with(['item', 'item.flyffItem', 'user.server'])->get();
     }
 
     /**
@@ -27,7 +27,6 @@ class ClassifiedController extends Controller
      */
     public function store(Request $request)
     {
-        Log::alert($request->all());
         $request->validate([
             'general_level' => 'required|numeric|between:0,10',
             'elemental_level' => 'required|numeric|between:0,10',
@@ -43,7 +42,7 @@ class ClassifiedController extends Controller
         $classifiedData = array_merge($request->all(), ["user_id" => auth()->user()->id]);
         $classified = Classified::create($classifiedData);
 
-        $itemData = array_merge($request->all(), ["classified_id" => $classified->id]);
+        $itemData = array_merge($request->all(), ["classified_id" => $classified->id, "flyffapi_item_id" => $request->input('item.flyff_api_id')]);
         $item = Item::create($itemData);
 
         if ($request->free_boolean) {
