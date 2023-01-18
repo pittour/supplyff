@@ -16,7 +16,7 @@ class ClassifiedController extends Controller
      */
     public function index()
     {
-        return Classified::with(['item', 'item.flyffItem', 'user.server'])->get();
+        return Classified::with(['item', 'item.flyffItem', 'user.server', 'item.flyffItem.class'])->get();
     }
 
     /**

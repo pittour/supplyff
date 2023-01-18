@@ -5,6 +5,7 @@
       :items="classifieds"
       :items-per-page="5"
       class="elevation-1 text-center"
+      @click:row="openDetails"
     >
       <template #[`item.icon`]="{ item }">
         <div class="d-flex justify-center align-center">
@@ -69,18 +70,25 @@
           {{ item.weekly_rate }} p
         </span>
       </template>
-      <template #[`item.action`]="{ item }">
+      <template #[`item.action`]>
         <span>
           <v-icon>mdi-chevron-right</v-icon>
         </span>
       </template>
     </v-data-table>
+    <classified-details
+      :detailDialog.sync="detailDialog"
+      :item="item"
+    />
   </v-container>
 </template>
 
 <script>
+import ClassifiedDetails from "~/components/details.vue";
+
 export default {
   name: "IndexPage",
+  components: { ClassifiedDetails },
   data() {
     return {
       headers: [
@@ -104,6 +112,8 @@ export default {
         { text: "", value: "action", sortable: false, align: "center" },
       ],
       classifieds: [],
+      detailDialog: false,
+      item: {},
     };
   },
 
@@ -112,5 +122,18 @@ export default {
       this.classifieds = res;
     });
   },
+
+  methods: {
+    openDetails(value) {
+      this.detailDialog = true;
+      this.item = value;
+    },
+  },
 };
 </script>
+
+<style>
+tbody {
+  cursor: pointer;
+}
+</style>
