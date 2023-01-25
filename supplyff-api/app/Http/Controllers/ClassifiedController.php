@@ -77,9 +77,24 @@ class ClassifiedController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Classified $classified)
     {
-        //
+        if (auth()->user()->id !== $classified->user_id) {
+            return response()->json(['error' => 'Permission denied'], 404);
+        }
+
+        $request->validate([
+            'weekly_rate' => 'required|numeric|between:0,999999999',
+            'deposit' => 'required|numeric|between:0,999999999',
+            'description' => 'string|max:256',
+        ]);
+
+        $classified->weekly_rate = $request->weekly_rate;
+        $classified->deposit = $request->deposit;
+        $classified->description = $request->description;
+        $classified->save();
+
+        return $classified;
     }
 
     /**
@@ -88,8 +103,20 @@ class ClassifiedController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Classified $classified)
     {
-        //
+        if (auth()->user()->id !== $classified->user_id) {
+            return response()->json(['error' => 'Permission denied'], 404);
+        }
+
+        $classified->delete();
+        return response()->json(['message' => 'Classified deleted successfully.'], 200);
+    }
+
+    public function userClassifieds()
+    {
+        $user = auth()->user();
+        $classifieds = $user->classifieds()->with(['item', 'user', 'user.server', 'item.flyffItem.class'])->get();
+        return $classifieds;
     }
 }

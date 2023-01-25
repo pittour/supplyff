@@ -58,6 +58,9 @@
                 <v-list-item @click="$router.push('/profile')">
                   <v-list-item-title>Welcome, {{ user.username }}</v-list-item-title>
                 </v-list-item>
+                <v-list-item @click="$router.push('/my-classifieds')">
+                  My classifieds
+                </v-list-item>
                 <v-list-item @click="logOut">
                   <v-list-item-title>Sign out</v-list-item-title>
                   <v-list-item-icon>

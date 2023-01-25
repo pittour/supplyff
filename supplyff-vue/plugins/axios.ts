@@ -30,7 +30,7 @@ function responseHandler(response: AxiosResponse<any>) {
     if (config.raw) {
         return response
     }
-    if (response.status == 200 || response.status == 201) {
+    if (response.status == 200 || response.status == 201 || response.status == 202 || response.status == 203) {
         const data = response?.data
         if (!data) {
             throw new HttpError('API Error. No data!')

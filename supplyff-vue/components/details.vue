@@ -28,7 +28,7 @@
                 <div class="pb-4">
                   <v-row
                     justify="center"
-                    class="pt-2"
+                    class="pt-3 text-center"
                   >
                     <span class="headline">{{ item.item.flyff_item.name }}</span>
                     <span
@@ -68,7 +68,7 @@
                 </v-row>
                 <v-row
                   justify="center"
-                  class="mt-3 pb-2"
+                  class="mt-5 pb-3"
                 >
                   <span
                     style="font-size: 1.4em"
@@ -81,7 +81,33 @@
           <v-col cols="7">
             <v-card height="100%">
               <v-card-text>
-                <v-row class="text-center">
+                <v-row
+                  class="text-center"
+                  v-if="item.user.id === $auth.user.id"
+                >
+                  <v-col>
+                    Deposit amount :
+                    <v-text-field
+                      v-model="item.deposit"
+                      style="width: 100px; display: inline-flex"
+                      dense
+                      :rules="[v => !!v || 'Required', v => v < 999999999 && v >= 0 || 'Rate must be between 0 and 999 999 999 penyas']"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col>
+                    Weekly rate :
+                    <v-text-field
+                      v-model="item.weekly_rate"
+                      style="width: 100px; display: inline-flex"
+                      dense
+                      :rules="[v => !!v || 'Required', v => v < 999999999 && v >= 0 || 'Rate must be between 0 and 999 999 999 penyas']"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row
+                  v-else
+                  class="text-center"
+                >
                   <v-col>
                     Deposit amount : {{ item.deposit }} p
                   </v-col>
@@ -89,19 +115,59 @@
                     Weekly rate : {{ item.weekly_rate }} p
                   </v-col>
                 </v-row>
-                <v-row class="text-center">
-                  <v-col>
+                <v-row
+                  class="text-center pt-2"
+                  no-gutters
+                  v-if="item.item.piercings || item.item.awake"
+                >
+                  <v-col v-if="item.item.piercings">
+                    Pierced
+                  </v-col>
+                  <v-col v-if="item.item.awake">
+                    Awaken
+                  </v-col>
+                </v-row>
+                <v-row
+                  class="text-center pt-3"
+                  no-gutters
+                >
+                  <v-col v-if="item.user.id === $auth.user.id">
+                    Description
+                    <v-textarea
+                      v-model="item.description"
+                      no-resize
+                      rows="1"
+                      dense
+                      :rules="[v => (v && v.length) <= 256 || 'Must be shorter than 256 characters']"
+                    >
+
+                    </v-textarea>
+                  </v-col>
+                  <v-col v-else>
                     Description :
                     <div>{{ item.description ? item.description : "No Description" }}</div>
                   </v-col>
                 </v-row>
-                <v-row class="text-center">
+                <v-row
+                  class="text-center pt-1"
+                  no-gutters
+                >
                   <v-col>
                     Contact :
                     <span>{{ item.user.ingame_tag }} on {{ item.user.server.name }} server</span>
                   </v-col>
                 </v-row>
               </v-card-text>
+              <v-btn
+                icon
+                color="success"
+                :disabled="!item.deposit || !item.weekly_rate || item.description > 256"
+                style="position: absolute; bottom: 5px; right: 10px"
+                @click="editClassified(item)"
+              >
+                <v-icon>mdi-check-circle-outline</v-icon>
+              </v-btn>
+
             </v-card>
           </v-col>
         </v-row>
@@ -129,7 +195,13 @@ export default {
     return {};
   },
 
-  methods: {},
+  methods: {
+    editClassified(item) {
+      this.$http.put("classified/" + item.id, item).then((res) => {
+        this.$emit("update:detailDialog", false);
+      });
+    },
+  },
 };
 </script>
 

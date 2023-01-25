@@ -47,3 +47,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // Classifieds
 Route::post('/classified', [ClassifiedController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/classifieds', [ClassifiedController::class, 'index']);
+Route::get('user/classifieds', [ClassifiedController::class, 'userClassifieds'])->middleware('auth:sanctum');
+Route::delete('classified/{classified}', [ClassifiedController::class, 'destroy'])->middleware('auth:sanctum');
+Route::put('classified/{classified}', [ClassifiedController::class, 'update'])->middleware('auth:sanctum');

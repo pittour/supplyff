@@ -112,6 +112,7 @@
                 <span>Upgrade Level</span>
                 <v-slider
                   v-model="singleAd.general_level"
+                  :disabled="!generalItem"
                   class="pt-3"
                   hide-details
                   dense
@@ -119,7 +120,7 @@
                   :thumb-size="16"
                   append-icon="mdi-plus"
                   prepend-icon="mdi-minus"
-                  max="10"
+                  :max="singleAd.item?.category === 'jewelry' ? 20 : 10"
                   @click:append="singleAd.general_level < 10 ? singleAd.general_level++ : ''"
                   @click:prepend="singleAd.general_level > 0 ? singleAd.general_level-- : ''"
                 ></v-slider>
@@ -130,6 +131,7 @@
                 <span>Elemental Level</span>
                 <v-slider
                   v-model="singleAd.elemental_level"
+                  :disabled="!elementItem"
                   class="pt-3"
                   hide-details
                   dense
@@ -162,7 +164,10 @@
               no-gutters
               class="mt-2"
             >
-              <v-col cols="6">
+              <v-col
+                cols="12"
+                v-if="singleAd.item?.category === 'weapon' || singleAd.item?.subcategory === 'shield'"
+              >
                 <v-checkbox
                   v-model="singleAd.awake"
                   hide-details
@@ -172,7 +177,10 @@
                 >
                 </v-checkbox>
               </v-col>
-              <v-col cols="6">
+              <v-col
+                cols="12"
+                v-if="singleAd.item?.subcategory === 'suit'"
+              >
                 <v-checkbox
                   v-model="singleAd.piercings"
                   hide-details
@@ -199,6 +207,7 @@
               v-model="singleAd.description"
               no-resize
               placeholder="Tell more about the item : piercings values, awake stats, ... or the transaction : maximum duration, payment beforehand/afterward, transaction location, ..."
+              :rules=" singleAd.description ? [v => v.length <= 256 || 'Must be less than 256 characters'] : []"
             ></v-textarea>
           </v-card-text>
         </v-card>
@@ -224,6 +233,8 @@ export default {
       disable_rate: false,
       itemDialog: false,
       itemSvg: require("~/static/img/plus-item.svg"),
+      generalItem: false,
+      elementItem: false,
     };
   },
   computed: {
@@ -262,6 +273,22 @@ export default {
   methods: {
     getItem(value) {
       this.singleAd.item = value;
+      if (
+        value.category == "weapon" ||
+        value.category == "armor" ||
+        value.category == "jewelry"
+      ) {
+        this.generalItem = true;
+      } else {
+        this.generalItem = false;
+        this.singleAd.general_level = 0;
+      }
+      if (value.category == "weapon" || value.subcategory == "shield") {
+        this.elementItem = true;
+      } else {
+        this.elementItem = false;
+        this.singleAd.elemental_level = 0;
+      }
     },
   },
 };

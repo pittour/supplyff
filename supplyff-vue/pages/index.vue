@@ -3,9 +3,13 @@
     <v-data-table
       :headers="headers"
       :items="classifieds"
-      :items-per-page="5"
+      :items-per-page="20"
       class="elevation-1 text-center"
       @click:row="openDetails"
+      :footer-props="{
+      itemsPerPageOptions: [10, 20, 50, -1],
+      itemsPerPageText: 'Items per page :'
+    }"
     >
       <template #[`item.icon`]="{ item }">
         <div class="d-flex justify-center align-center">
