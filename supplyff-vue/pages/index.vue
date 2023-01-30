@@ -81,6 +81,7 @@
       </template>
     </v-data-table>
     <classified-details
+      @refresh="getClassifieds"
       :detailDialog.sync="detailDialog"
       :item="item"
     />
@@ -122,15 +123,18 @@ export default {
   },
 
   created() {
-    this.$http.get("classifieds").then((res) => {
-      this.classifieds = res;
-    });
+    this.getClassifieds();
   },
 
   methods: {
     openDetails(value) {
       this.detailDialog = true;
       this.item = value;
+    },
+    getClassifieds() {
+      this.$http.get("classifieds").then((res) => {
+        this.classifieds = res;
+      });
     },
   },
 };

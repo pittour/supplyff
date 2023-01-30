@@ -10,7 +10,27 @@
           <v-col>
             Item sold by : {{ item.user ? item.user.username : '' }}
           </v-col>
-          <v-col class="text-right">
+          <v-col
+            v-if="$auth.user?.user?.admin"
+            class="subtitle-1"
+            align-self="center"
+          >
+            Mod Actions :
+            <v-btn
+              small
+              color="warning"
+              @click="deleteAd(item)"
+            >Delete ad</v-btn>
+            <v-btn
+              small
+              color="error"
+              @click=ban(item)
+            >Ban User</v-btn>
+          </v-col>
+          <v-col
+            class="text-right"
+            cols="auto"
+          >
             <v-btn
               icon
               @click="$emit('update:detailDialog', false)"
@@ -83,7 +103,7 @@
               <v-card-text>
                 <v-row
                   class="text-center"
-                  v-if="item.user.id === $auth.user.id"
+                  v-if="item.user.id === $auth.user?.user?.id"
                 >
                   <v-col>
                     Deposit amount :
@@ -131,7 +151,7 @@
                   class="text-center pt-3"
                   no-gutters
                 >
-                  <v-col v-if="item.user.id === $auth.user.id">
+                  <v-col v-if="item.user.id === $auth.user?.user?.id">
                     Description
                     <v-textarea
                       v-model="item.description"
@@ -159,6 +179,7 @@
                 </v-row>
               </v-card-text>
               <v-btn
+                v-if="item.user.id === $auth.user?.user?.id"
                 icon
                 color="success"
                 :disabled="!item.deposit || !item.weekly_rate || item.description > 256"
@@ -199,6 +220,18 @@ export default {
     editClassified(item) {
       this.$http.put("classified/" + item.id, item).then((res) => {
         this.$emit("update:detailDialog", false);
+      });
+    },
+    deleteAd(item) {
+      this.$http.delete("classified/" + item.id).then(() => {
+        this.$emit("update:detailDialog", false);
+        this.$emit("refresh");
+      });
+    },
+    ban(item) {
+      this.$http.delete("user/" + item.user_id).then(() => {
+        this.$emit("update:detailDialog", false);
+        this.$emit("refresh");
       });
     },
   },

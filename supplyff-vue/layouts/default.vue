@@ -56,9 +56,9 @@
               </div>
               <div v-else>
                 <v-list-item @click="$router.push('/profile')">
-                  <v-list-item-title>Welcome, {{ user.username }}</v-list-item-title>
+                  <v-list-item-title>Welcome, {{ user.user.username }}</v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="$router.push('/my-classifieds')">
+                <v-list-item @click="$router.push('/user/' + user.user.id + '/classifieds')">
                   My classifieds
                 </v-list-item>
                 <v-list-item @click="logOut">

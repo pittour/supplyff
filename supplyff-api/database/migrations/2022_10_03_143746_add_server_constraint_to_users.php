@@ -16,6 +16,7 @@ class AddServerConstraintToUsers extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('bio')->nullable();
             $table->foreignId('server_id')->nullable()->constrained()->nullOnDelete();
+            $table->boolean('admin')->default(0);
         });
     }
 
@@ -28,6 +29,7 @@ class AddServerConstraintToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['server_id']);
+            $table->dropColumn(['bio', 'admin', 'server_id']);
         });
     }
 }

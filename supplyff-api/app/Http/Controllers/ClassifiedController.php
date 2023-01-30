@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classified;
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -105,7 +106,7 @@ class ClassifiedController extends Controller
      */
     public function destroy(Classified $classified)
     {
-        if (auth()->user()->id !== $classified->user_id) {
+        if (auth()->user()->id !== $classified->user_id && !auth()->user()->admin) {
             return response()->json(['error' => 'Permission denied'], 404);
         }
 
@@ -113,10 +114,13 @@ class ClassifiedController extends Controller
         return response()->json(['message' => 'Classified deleted successfully.'], 200);
     }
 
-    public function userClassifieds()
+    public function userClassifieds(User $user)
     {
-        $user = auth()->user();
-        $classifieds = $user->classifieds()->with(['item', 'user', 'user.server', 'item.flyffItem.class'])->get();
+        if ($user->id !== auth()->user()->id && !auth()->user()->admin) {
+            return response()->json(['error' => 'Permission denied'], 404);
+        }
+
+        $classifieds = Classified::where('user_id', $user->id)->with(['item', 'user', 'user.server', 'item.flyffItem.class'])->get();
         return $classifieds;
     }
 }

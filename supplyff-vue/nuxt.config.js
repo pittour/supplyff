@@ -41,6 +41,10 @@ export default {
     '@nuxt/typescript-build'
   ],
 
+  middleware: [
+    'admin'
+  ],
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',

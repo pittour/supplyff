@@ -20,7 +20,8 @@
       <v-card-text>
         <v-row>
           <v-col
-            cols="3"
+            cols="6"
+            md="3"
             v-for="item in classifieds"
             :key="item.id"
           >

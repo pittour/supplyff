@@ -39,7 +39,9 @@ export default {
 
   methods: {
     createAd() {
-      this.$http.post("classified", this.singleAd).then((res) => {});
+      this.$http.post("classified", this.singleAd).then((res) => {
+        this.$router.push({ path: "/" });
+      });
     },
 
     formState(data) {
