@@ -182,7 +182,7 @@
                 v-if="item.user.id === $auth.user?.user?.id"
                 icon
                 color="success"
-                :disabled="!item.deposit || !item.weekly_rate || item.description > 256"
+                :disabled="!item.deposit || !item.weekly_rate || item.description?.length > 256"
                 style="position: absolute; bottom: 5px; right: 10px"
                 @click="editClassified(item)"
               >

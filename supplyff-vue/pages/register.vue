@@ -150,7 +150,6 @@ export default {
     this.$axios.get("/servers").then((res) => {
       this.servers = res.data;
     });
-    this.$http.get("fdfdszfd");
   },
 
   methods: {
@@ -173,10 +172,16 @@ export default {
             },
           }
         )
-        .then((res) => this.$router.push("/"))
-        .catch((e) => {
-          console.log(e.message);
-        });
+        .then((res) => {
+          this.$router.push("/");
+          this.$auth.loginWith("laravelSanctum", {
+            data: {
+              email: this.email,
+              password: this.pwd,
+            },
+          });
+        })
+        .catch((e) => {});
     },
   },
 };

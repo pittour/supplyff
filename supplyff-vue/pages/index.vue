@@ -1,9 +1,29 @@
 <template>
   <v-container>
+    <v-row class="pb-2">
+      <v-col>
+        <span class="headline">Marketplace</span>
+      </v-col>
+      <v-col>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          dense
+          solo
+          clearable
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
     <v-data-table
       :headers="headers"
       :items="classifieds"
       :items-per-page="20"
+      :search="search"
+      :loading="loading"
       class="elevation-1 text-center"
       @click:row="openDetails"
       :footer-props="{
@@ -22,7 +42,7 @@
         </div>
 
       </template>
-      <template #[`item.name`]="{ item }">
+      <template #[`item.item.flyff_item.name`]="{ item }">
         <span class="font-weight-medium">
           {{ item.item.flyff_item.name }}
         </span>
@@ -53,7 +73,7 @@
           -
         </div>
       </template>
-      <template #[`item.server`]="{ item }">
+      <template #[`item.user.server.name`]="{ item }">
         <span>
           {{ item.user.server.name }}
         </span>
@@ -63,14 +83,8 @@
           {{ item.deposit }} p
         </span>
       </template>
-      <template #[`item.rate`]="{ item }">
-        <span
-          v-if="item.is_free || item.weekly_rate === 0"
-          class="font-weight-medium"
-        >
-          FREE !
-        </span>
-        <span v-else>
+      <template #[`item.weekly_rate`]="{ item }">
+        <span>
           {{ item.weekly_rate }} p
         </span>
       </template>
@@ -96,25 +110,68 @@ export default {
   components: { ClassifiedDetails },
   data() {
     return {
+      search: "",
+      loading: false,
       headers: [
         {
           text: "Icon",
           sortable: false,
           value: "icon",
           align: "center",
+          sortable: false,
+          filterable: false,
         },
-        { text: "Name", value: "name", sortable: false, align: "center" },
-        { text: "Upgrade", value: "upgrade", sortable: false, align: "center" },
+        {
+          text: "Name",
+          value: "item.flyff_item.name",
+          align: "center",
+          sortable: true,
+          type: "text",
+        },
+        {
+          text: "Upgrade",
+          value: "upgrade",
+          sortable: false,
+          align: "center",
+          filterable: false,
+        },
         {
           text: "Other Bonuses",
           value: "bonuses",
           sortable: false,
           align: "center",
+          filterable: false,
         },
-        { text: "Server", value: "server", sortable: false, align: "center" },
-        { text: "Deposit", value: "deposit", align: "center" },
-        { text: "Weekly Rate", value: "rate", align: "center" },
-        { text: "", value: "action", sortable: false, align: "center" },
+        {
+          text: "Server",
+          value: "user.server.name",
+          sortable: false,
+          align: "center",
+          sortable: true,
+        },
+        {
+          text: "Deposit",
+          value: "deposit",
+          align: "center",
+          type: "number",
+          sortable: true,
+          filterable: false,
+        },
+        {
+          text: "Weekly Rate",
+          value: "weekly_rate",
+          align: "center",
+          type: "number",
+          sortable: true,
+          filterable: false,
+        },
+        {
+          text: "",
+          value: "action",
+          sortable: false,
+          align: "center",
+          filterable: false,
+        },
       ],
       classifieds: [],
       detailDialog: false,
@@ -132,8 +189,10 @@ export default {
       this.item = value;
     },
     getClassifieds() {
+      this.loading = true;
       this.$http.get("classifieds").then((res) => {
         this.classifieds = res;
+        this.loading = false;
       });
     },
   },

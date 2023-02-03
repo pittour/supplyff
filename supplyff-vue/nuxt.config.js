@@ -69,7 +69,10 @@ export default {
           user: { url: '/api/me', method: 'get' }
         }
       }
-    }
+    },
+    redirect: {
+      logout: '/',
+    },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

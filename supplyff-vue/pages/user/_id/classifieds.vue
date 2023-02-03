@@ -4,11 +4,11 @@
       <v-card-title>
         <v-row>
           <v-col>
-            Store Page
+            Store Page ({{ classifieds.length }})
           </v-col>
           <v-col
             class="text-right"
-            v-if="$auth.user.user.id === $route.params.id"
+            v-if="$auth.user.user?.id == $route.params.id"
           >
             <v-btn
               to="/new-ad"

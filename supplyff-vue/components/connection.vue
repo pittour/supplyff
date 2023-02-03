@@ -3,6 +3,7 @@
     <v-dialog
       v-model="show"
       max-width="350px"
+      persistent
     >
       <v-card class="d-flex flex-column align-center justify-center py-12">
         <v-alert

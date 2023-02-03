@@ -8,7 +8,11 @@
       <!-- <span v-if="isAuthenticated"> {{ loggedInUser.username }} </span> -->
       <v-container>
         <v-row no-gutters>
-          Supplyff
+          <v-btn
+            text
+            plain
+            @click="$router.push('/')"
+          >Supplyff</v-btn>
           <v-spacer />
 
           <v-btn
@@ -60,6 +64,12 @@
                 </v-list-item>
                 <v-list-item @click="$router.push('/user/' + user.user.id + '/classifieds')">
                   My classifieds
+                </v-list-item>
+                <v-list-item
+                  v-if="$auth.user.user.admin"
+                  @click="$router.push('/admin')"
+                >
+                  Admin panel
                 </v-list-item>
                 <v-list-item @click="logOut">
                   <v-list-item-title>Sign out</v-list-item-title>
@@ -113,6 +123,7 @@ export default {
   methods: {
     logOut() {
       this.$auth.logout();
+      this.connectionDial = true;
     },
   },
 };

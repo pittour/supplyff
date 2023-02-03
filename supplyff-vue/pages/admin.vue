@@ -76,7 +76,7 @@ export default {
           sortable: false,
           align: "center",
         },
-        { text: "Profile", value: "view", sortable: false, align: "center" },
+        { text: "Store Page", value: "view", sortable: false, align: "center" },
         { text: "", value: "actions", sortable: false, align: "center" },
       ],
       users: [],
