@@ -4,6 +4,7 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - supplyff-vue',
@@ -55,18 +56,18 @@ export default {
     debug: false,
     credentials: true,
     https: false,
-    baseURL: "http://localhost:8000/api",
+    baseUrl: process.env.BASE_URL
   },
 
   auth: {
     strategies: {
       laravelSanctum: {
         provider: 'laravel/sanctum',
-        url: 'http://localhost:8000',
+        url: process.env.BASE_URL,
         endpoints: {
-          login: { url: '/api/login', method: 'post' },
-          logout: { url: '/api/logout', method: 'post' },
-          user: { url: '/api/me', method: 'get' }
+          login: { url: '/login', method: 'post' },
+          logout: { url: '/logout', method: 'post' },
+          user: { url: '/me', method: 'get' }
         }
       }
     },

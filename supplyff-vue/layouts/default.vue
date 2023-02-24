@@ -93,6 +93,8 @@
     </v-main>
     <v-footer app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
+      <v-spacer></v-spacer>
+      <span> <a href="/privacy">Privacy Policy</a></span>
     </v-footer>
   </v-app>
 </template>

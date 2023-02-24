@@ -180,7 +180,6 @@ globalHandlers.register('HttpError', (error) => {
 
 function createHttpInstance() {
     const instance = axios.create({
-        baseURL: "http://localhost:8000/api",
         withCredentials: true,
     })
     const responseError = (error: any) => globalHandlers.responseErrorHandler(error)
