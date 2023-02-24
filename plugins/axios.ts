@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios"; Vue
 import Vue from 'vue';
 
 declare module 'axios' {
@@ -180,6 +180,7 @@ globalHandlers.register('HttpError', (error) => {
 
 function createHttpInstance() {
     const instance = axios.create({
+        baseURL: process.env.baseUrl,
         withCredentials: true,
     })
     const responseError = (error: any) => globalHandlers.responseErrorHandler(error)
