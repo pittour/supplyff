@@ -173,7 +173,7 @@ globalHandlers.registerMany({
 
 globalHandlers.register('HttpError', (error) => {
     return { message: 'Internal server errror! We already notify developers!' }
-    //when we return an valid ErrorHandlerObject, will be processed as whell.
+    //when we return an valid ErrorHandlerObject, will be processed as well.
     //this allow we to perform custom behavior like sending email and default one,
     //like showing an message to user.
 })
