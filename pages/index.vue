@@ -181,6 +181,7 @@ export default {
 
   created() {
     this.getClassifieds();
+    console.log("test");
   },
 
   methods: {
