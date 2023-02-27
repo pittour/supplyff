@@ -4,13 +4,10 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
-  // env: {
-  //   baseUrl: process.env.BASE_URL || 'http://localhost:1000'
-  // },
-
-  publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:1000'
   },
+
 
 
   // Global page headers: https://go.nuxtjs.dev/config-head
