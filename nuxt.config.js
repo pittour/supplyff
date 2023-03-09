@@ -73,8 +73,12 @@ export default {
           login: { url: '/login', method: 'post' },
           logout: { url: '/logout', method: 'post' },
           user: { url: '/me', method: 'get' }
+        },
+        user: {
+          autoFetch: true,
         }
-      }
+      },
+
     },
     redirect: {
       logout: '/',

@@ -81,7 +81,7 @@ export default {
             },
           })
           .then(() => {
-            this.$auth.fetchUser();
+            // this.$auth.fetchUser();
             this.show = false;
           });
       } catch (e) {
