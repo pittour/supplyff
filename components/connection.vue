@@ -81,6 +81,7 @@ export default {
             },
           })
           .then(() => {
+            console.log(this.$auth.loggedIn);
             if (this.$auth.loggedIn) {
               this.$auth.fetchUser();
               this.show = false;

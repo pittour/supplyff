@@ -117,6 +117,9 @@
 <script>
 export default {
   name: "SupplyffVuePrivacy",
+  head: {
+    title: "Privacy policy",
+  },
 
   data() {
     return {};
