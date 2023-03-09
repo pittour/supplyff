@@ -60,7 +60,7 @@ export default {
   axios: {
     debug: false,
     credentials: true,
-    https: false,
+    https: true,
     baseUrl: process.env.BASE_URL
   },
 
