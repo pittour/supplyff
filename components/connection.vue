@@ -81,8 +81,8 @@ export default {
             },
           })
           .then(() => {
-            this.$auth.fetchUser();
-            if (this.$auth.loggedIn) {
+            if (this.$store.state.auth.loggedIn) {
+              this.$auth.fetchUser();
               this.show = false;
             }
           });
