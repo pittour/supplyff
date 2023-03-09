@@ -58,18 +58,10 @@ export default {
   ],
 
   axios: {
-    proxy: true,
     debug: false,
     credentials: true,
     https: false,
     baseUrl: process.env.BASE_URL
-  },
-
-  proxy: {
-    '/laravel': {
-      target: 'https://laravel-auth.nuxtjs.app',
-      pathRewrite: { '^/laravel': '/' }
-    }
   },
 
   auth: {
