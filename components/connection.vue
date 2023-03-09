@@ -81,13 +81,10 @@ export default {
             },
           })
           .then(() => {
-            try {
-              this.$axios.get("/me").then((res) => {
-                this.$auth.setUser(res.data);
-                this.show = false;
-              });
-            } catch (e) {
-              this.errors = e.response.data.message;
+            console.log(this.$auth);
+            if (this.$auth.loggedIn) {
+              this.$auth.fetchUser();
+              this.show = false;
             }
           });
       } catch (e) {
