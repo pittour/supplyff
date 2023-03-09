@@ -72,12 +72,8 @@ export default {
         endpoints: {
           login: { url: '/login', method: 'post' },
           logout: { url: '/logout', method: 'post' },
-          user: { url: '/me', method: 'get' }
+          user: { url: '/me', method: 'get', propertyName: false }
         },
-        user: {
-          autoFetch: true,
-          property: false
-        }
       },
 
     },
