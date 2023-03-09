@@ -8,36 +8,6 @@
       <v-card-title>Create an Ad</v-card-title>
       <v-card-text>
 
-        <!-- <template #header>
-                <v-toolbar>
-                  <v-text-field
-                    v-model="search"
-                    clearable
-                    flat
-                    solo-inverted
-                    hide-details
-                    prepend-inner-icon="mdi-magnify"
-                    label="Search"
-                  />
-                </v-toolbar>
-              </template> -->
-
-        <!-- <template v-for="item in apiItems">
-          <v-hover
-            :key="item.id"
-            v-slot="{ hover }"
-          >
-            <v-card :elevation="hover ? 12 : 2">
-              <v-img
-                src="https://api.flyff.com/image/item/gengemgem.png"
-                max-height="200px"
-              >
-                <v-card-title>lol</v-card-title>
-              </v-img>
-            </v-card>
-          </v-hover>
-        </template> -->
-
         <v-row
           no-gutters
           justify="center"

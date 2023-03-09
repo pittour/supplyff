@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="pb-2">
       <v-col>
-        <span class="headline">Marketplace 1</span>
+        <span class="headline">Marketplace</span>
       </v-col>
       <v-col>
         <v-text-field
@@ -38,6 +38,7 @@
             max-height="30"
             max-width="30"
             contain
+            alt="Flyff item's icon"
           />
         </div>
 
@@ -108,6 +109,10 @@ import ClassifiedDetails from "~/components/details.vue";
 export default {
   name: "IndexPage",
   components: { ClassifiedDetails },
+  head: {
+    title: "Marketplace",
+  },
+
   data() {
     return {
       search: "",
@@ -181,7 +186,6 @@ export default {
 
   created() {
     this.getClassifieds();
-    console.log("test");
   },
 
   methods: {

@@ -19,6 +19,7 @@
             class="pa-8"
             contain
             :src="profileImg"
+            alt="Profile's avatar"
           ></v-img>
         </v-avatar>
       </v-row>
@@ -89,6 +90,9 @@
 <script>
 export default {
   name: "SupplyffVueProfile",
+  head: {
+    title: "Profile",
+  },
 
   data() {
     return {

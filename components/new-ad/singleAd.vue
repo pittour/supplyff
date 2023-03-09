@@ -36,6 +36,7 @@
                 :src="singleAd.item ? 'https://api.flyff.com/image/item/' + singleAd.item.icon : itemSvg"
                 max-height="70"
                 contain
+                alt="Flyff item's icon"
               >
               </v-img>
             </v-row>

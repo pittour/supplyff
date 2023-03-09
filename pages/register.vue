@@ -105,6 +105,9 @@
 <script>
 export default {
   name: "RegisterPage",
+  head: {
+    title: "Register",
+  },
   data() {
     return {
       valid: false,

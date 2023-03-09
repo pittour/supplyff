@@ -27,6 +27,9 @@ export default {
   components: {
     singleAd,
   },
+  head: {
+    title: "New ad",
+  },
 
   data() {
     return {

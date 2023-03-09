@@ -72,6 +72,7 @@
                 :src="'https://api.flyff.com/image/item/' + item.icon"
                 max-height="50"
                 contain
+                alt="Flyff item's icon"
               >
               </v-img>
               <div class="text-center">{{item.name}}</div>

@@ -53,6 +53,9 @@
 export default {
   name: "Admin",
   middleware: "admin",
+  head: {
+    title: "Admin panel",
+  },
 
   data() {
     return {

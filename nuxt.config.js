@@ -12,15 +12,15 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - supplyff-vue',
-    title: 'supplyff-vue',
+    titleTemplate: '%s - supplyff',
+    title: 'supplyff',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: 'Renting marketplace for Flyff Universe.' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [

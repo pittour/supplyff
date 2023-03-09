@@ -83,6 +83,7 @@
                     :src="'https://api.flyff.com/image/item/' + item.item.flyff_item.icon"
                     max-height="70"
                     contain
+                    alt="Flyff item's icon"
                   >
                   </v-img>
                 </v-row>
