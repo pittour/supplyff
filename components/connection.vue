@@ -81,8 +81,14 @@ export default {
             },
           })
           .then(() => {
-            // this.$auth.fetchUser();
-            this.show = false;
+            try {
+              this.$axios.get("/me").then(() => {
+                console.log(this.$auth.loggedIn);
+                if (this.$auth.loggedIn) {
+                  this.show = false;
+                }
+              });
+            } catch {}
           });
       } catch (e) {
         this.errors = e.response.data.message;
