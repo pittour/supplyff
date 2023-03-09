@@ -76,6 +76,7 @@ export default {
         },
         user: {
           autoFetch: true,
+          property: false
         }
       },
 
